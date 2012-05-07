@@ -8,12 +8,13 @@ import android.graphics.Paint;
 import android.graphics.Picture;
 import android.graphics.RectF;
 import android.text.style.ScaleXSpan;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.widget.TextView;
 
-import com.larvalabs.svgandroid.SVGParser;
+import com.larvalabs.svgandroid.*;
 
 public class ThreeMusketeersBoard extends View {
 
@@ -65,48 +66,49 @@ public class ThreeMusketeersBoard extends View {
 		// TODO Auto-generated method stub
 		int x = (int)(event.getX()/velikost);
 		int y = (int)(event.getY()/velikost);
-
-		if((x==XSelect&&(y+1==YSelect || y-1==YSelect))||(y==YSelect&&(x-1==XSelect || x+1==XSelect)))
+		if(x<5&&y<5)
 		{
-			System.out.println("SOSED");
+				if((x==XSelect&&(y+1==YSelect || y-1==YSelect))||(y==YSelect&&(x-1==XSelect || x+1==XSelect)))
+				{
+					System.out.println("SOSED");
+					
+					if(polozaj[XSelect][YSelect]==1 && naVrsti==false)
+					{
+						if(polozaj[x][y]<=0)
+						{
+							polozaj[x][y]=1;
+							polozaj[XSelect][YSelect]=0;
+							NaVrstiJe();
+						}
+					}
+					if(polozaj[XSelect][YSelect]==2 && naVrsti == true)
+					{
+						if(polozaj[x][y]==1)
+						{
+							polozaj[x][y]=2;
+							polozaj[XSelect][YSelect]=0;
+							NaVrstiJe();
+						}
+					}
+					XSelect = -1;
+					YSelect = -1;
+				}
+				else if(polozaj[x][y]>0)
+				{
+					if(XSelect == x && YSelect == y)
+					{
+						XSelect = -1;
+						YSelect = -1;
+					}
+					else
+					{
+						XSelect = x;
+						YSelect = y;
+					}
+				}
 			
-			if(polozaj[XSelect][YSelect]==1 && naVrsti==false)
-			{
-				if(polozaj[x][y]<=0)
-				{
-					polozaj[x][y]=1;
-					polozaj[XSelect][YSelect]=0;
-					NaVrstiJe();
-				}
-			}
-			if(polozaj[XSelect][YSelect]==2 && naVrsti == true)
-			{
-				if(polozaj[x][y]==1)
-				{
-					polozaj[x][y]=2;
-					polozaj[XSelect][YSelect]=0;
-					NaVrstiJe();
-				}
-			}
-			XSelect = -1;
-			YSelect = -1;
+				this.invalidate();
 		}
-		else if(polozaj[x][y]>0)
-		{
-			if(XSelect == x && YSelect == y)
-			{
-				XSelect = -1;
-				YSelect = -1;
-			}
-			else
-			{
-				XSelect = x;
-				YSelect = y;
-			}
-		}
-	
-		this.invalidate();
-		
 		return super.onTouchEvent(event);
 	}
 	

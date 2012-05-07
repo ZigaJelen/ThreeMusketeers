@@ -2,9 +2,7 @@ package three.musketeers.namespace;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.*;
+import android.widget.LinearLayout;
 
 public class ThreeMusketeersActivity extends Activity {
     /** Called when the activity is first created. */
@@ -14,7 +12,7 @@ public class ThreeMusketeersActivity extends Activity {
         setContentView(R.layout.main);
         
         LinearLayout LayoutGlavni = (LinearLayout)findViewById(R.id.linearLayout1);
-       
+        
         ThreeMusketeersBoard board = new ThreeMusketeersBoard(this, findViewById(R.id.textView1));
         LayoutGlavni.addView(board);
         
