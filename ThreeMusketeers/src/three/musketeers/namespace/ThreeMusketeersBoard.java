@@ -1,5 +1,7 @@
 package three.musketeers.namespace;
 
+import java.util.Arrays;
+
 import android.R.bool;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.TextView;
 
 import com.larvalabs.svgandroid.*;
@@ -21,7 +24,7 @@ public class ThreeMusketeersBoard extends View {
 	int[][] polozaj;
 	int velikost, XSelect, YSelect;
 	Boolean naVrsti; // true=musketeer
-	TextView text;
+	TextView text2;
 	public int[][] getPolozaj() {
 		return polozaj;
 	}
@@ -34,7 +37,7 @@ public class ThreeMusketeersBoard extends View {
 	public ThreeMusketeersBoard(Context context, View txt) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		text = (TextView)txt;
+		text2 = (TextView)txt;
 		XSelect=-1;
 		YSelect=-1;
 		naVrsti = true;
@@ -61,6 +64,7 @@ public class ThreeMusketeersBoard extends View {
 		return naVrsti;
 	}
 
+
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// TODO Auto-generated method stub
@@ -72,28 +76,28 @@ public class ThreeMusketeersBoard extends View {
 				{
 					System.out.println("SOSED");
 					
-					if(polozaj[XSelect][YSelect]==1 && naVrsti==false)
+					if(polozaj[YSelect][XSelect]==1 && naVrsti==false)
 					{
-						if(polozaj[x][y]<=0)
+						if(polozaj[y][x]<=0)
 						{
-							polozaj[x][y]=1;
-							polozaj[XSelect][YSelect]=0;
+							polozaj[y][x]=1;
+							polozaj[YSelect][XSelect]=0;
 							NaVrstiJe();
 						}
 					}
-					if(polozaj[XSelect][YSelect]==2 && naVrsti == true)
+					if(polozaj[YSelect][XSelect]==2 && naVrsti == true)
 					{
-						if(polozaj[x][y]==1)
+						if(polozaj[y][x]==1)
 						{
-							polozaj[x][y]=2;
-							polozaj[XSelect][YSelect]=0;
+							polozaj[y][x]=2;
+							polozaj[YSelect][XSelect]=0;
 							NaVrstiJe();
 						}
 					}
 					XSelect = -1;
 					YSelect = -1;
 				}
-				else if(polozaj[x][y]>0)
+				else if(polozaj[y][x]>0)
 				{
 					if(XSelect == x && YSelect == y)
 					{
@@ -108,6 +112,28 @@ public class ThreeMusketeersBoard extends View {
 				}
 			
 				this.invalidate();
+				
+				//-----------------------------------------------------------
+				//				Nepomembno
+				//-----------------------------------------------------------
+				String polje = "";
+				for(int[] x1 : polozaj)
+				{
+					polje += Arrays.toString(x1) + "\n";
+				}
+				
+				if(!naVrsti) {
+					polje += "\n" +"Cardinal Richelieus";
+				}
+				else {
+					polje += "\n" + "The musketeer";
+				}
+				
+				text2.setText(polje);
+				//-----------------------------------------------------------
+				//-----------------------------------------------------------
+				//-----------------------------------------------------------
+				
 		}
 		return super.onTouchEvent(event);
 	}
@@ -116,11 +142,9 @@ public class ThreeMusketeersBoard extends View {
 	{
 		if(naVrsti) {
 			naVrsti=false;
-			text.setText("Cardinal Richelieus");
 		}
 		else {
 			naVrsti=true;
-			text.setText("the musketeer");
 		}
 	}
 
@@ -138,9 +162,9 @@ public class ThreeMusketeersBoard extends View {
 		//canvas.drawRect0, 0, 200, 200, color color);
 		
 		int k=1;
-		for(int x=1;x<=5;x++)
+		for(int y=1;y<=5;y++)
 		{
-			for(int y=1;y<=5;y++)
+			for(int x=1;x<=5;x++)
 			{
 				//Izris površine
 				if(k%2==0)
@@ -167,12 +191,12 @@ public class ThreeMusketeersBoard extends View {
 				//Izris Figur!
 				if(polozaj !=null)
 				{
-					if(polozaj[x-1][y-1]>0)
+					if(polozaj[y-1][x-1]>0)
 					{
 						Picture figura=null;
-						if(polozaj[x-1][y-1]==1)
+						if(polozaj[y-1][x-1]==1)
 							figura = SVGParser.getSVGFromResource(getResources(), R.raw.crmen).getPicture();
-						if(polozaj[x-1][y-1]==2)
+						if(polozaj[y-1][x-1]==2)
 							figura = SVGParser.getSVGFromResource(getResources(), R.raw.mus).getPicture();
 						canvas.drawPicture(figura, new RectF(8+(velikost*(x-1)), 15+(velikost*(y-1)), x*velikost-8, y*velikost-10));
 					}
