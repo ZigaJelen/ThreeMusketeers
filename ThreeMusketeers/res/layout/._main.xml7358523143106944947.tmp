@@ -10,12 +10,16 @@
         android:layout_height="wrap_content"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+
+
+
+
+
+
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_height="260dp"
         android:orientation="horizontal" >
 
         <Button
@@ -24,13 +28,15 @@
             android:layout_height="wrap_content"
             android:text="Button" />
     </LinearLayout>
-
+
+
+
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" >
-
+        android:layout_height="match_parent" >
+
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
@@ -39,7 +45,8 @@
             android:layout_weight="1"
             android:text="Small text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
+
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"

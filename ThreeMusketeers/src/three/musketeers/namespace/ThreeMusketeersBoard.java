@@ -1,5 +1,6 @@
 package three.musketeers.namespace;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import android.R.bool;
@@ -8,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Picture;
+import android.graphics.Point;
 import android.graphics.RectF;
 import android.text.style.ScaleXSpan;
 import android.util.Log;
@@ -25,19 +27,37 @@ public class ThreeMusketeersBoard extends View {
 	int velikost, XSelect, YSelect;
 	Boolean naVrsti; // true=musketeer
 	TextView text2;
+	TextView text3;
+	
+	private ArrayList<Point> musketeerji;
+	
+	public ArrayList<Point> getMusketeerji() {
+		return musketeerji;
+	}
+
 	public int[][] getPolozaj() {
 		return polozaj;
 	}
 
 	public void setPolozaj(int[][] polozaj) {
 		this.polozaj = polozaj;
+		musketeerji = new ArrayList<Point>();
+		for (int i = 0; i < polozaj.length; i++) {
+			for (int j = 0; j < polozaj[i].length; j++) {
+				if(polozaj[i][j]==2)
+					musketeerji.add(new Point(i, j));
+			}
+		}
 		this.invalidate();
 	}
 
-	public ThreeMusketeersBoard(Context context, View txt) {
+	public ThreeMusketeersBoard(Context context, View txt, View txt2) {
 		super(context);
 		// TODO Auto-generated constructor stub
 		text2 = (TextView)txt;
+		text3 = (TextView)txt2;
+		musketeerji = new ArrayList<Point>();
+		//text3 = (TextView)findViewById(R.id.textView3);
 		XSelect=-1;
 		YSelect=-1;
 		naVrsti = true;
@@ -51,6 +71,7 @@ public class ThreeMusketeersBoard extends View {
 			{
 				if((x==0 && y==4)||(x==2 && y==2)||(x==4 && y==0)) {
 					polozaj[x][y]=2;
+					musketeerji.add(new Point(x, y));
 				}
 				else {
 					polozaj[x][y]=1;
@@ -117,19 +138,35 @@ public class ThreeMusketeersBoard extends View {
 				//				Nepomembno
 				//-----------------------------------------------------------
 				String polje = "";
+				String poteze = "";
 				for(int[] x1 : polozaj)
 				{
 					polje += Arrays.toString(x1) + "\n";
 				}
 				
+				
+				
 				if(!naVrsti) {
-					polje += "\n" +"Cardinal Richelieus";
+					
+					polje +="\n" + "Cardinal";
+					vozlisce t = new vozlisce(getPolozaj(),true, musketeerji);
+					poteze = t.getMozne();
+					text3.setText(poteze);
 				}
 				else {
-					polje += "\n" + "The musketeer";
+					
+					polje += "\n" + "The Musketeer";
+					vozlisce t = new vozlisce(getPolozaj(),false, musketeerji);
+					poteze = t.getMozne();
+					text3.setText(poteze);
 				}
 				
+				
+				
+				
 				text2.setText(polje);
+				
+				
 				//-----------------------------------------------------------
 				//-----------------------------------------------------------
 				//-----------------------------------------------------------
@@ -138,7 +175,7 @@ public class ThreeMusketeersBoard extends View {
 		return super.onTouchEvent(event);
 	}
 	
-	void NaVrstiJe()
+	public void NaVrstiJe()
 	{
 		if(naVrsti) {
 			naVrsti=false;
