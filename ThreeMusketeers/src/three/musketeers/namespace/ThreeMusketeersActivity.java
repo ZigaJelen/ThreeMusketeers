@@ -46,7 +46,34 @@ public class ThreeMusketeersActivity extends Activity {
 		}
 		
 	}
-	
+	private class mctsTastk extends AsyncTask<Integer, Void, Void>
+	{
+		@Override
+		protected Void doInBackground(Integer... params) {
+			// TODO Auto-generated method stub
+			vozlisce voz = new vozlisce(board.getPolozaj(),!board.getNaVrst(),board.getMusketeerji());
+			int tmp;
+			if(board.getNaVrst())
+				tmp = 2;
+			else
+				tmp = 1;
+			vozlisce odlocitev= mcts.Preveri(voz, tmp);
+			PotezaClass tmp1 = new PotezaClass();
+			tmp1.Poteza = odlocitev;
+			if(zaustavi != true)
+				poteza = tmp1;
+			vrniMCTS();
+			return null;
+		}
+
+		@Override
+		protected void onCancelled() {
+			// TODO Auto-generated method stub
+			zaustavi = true;
+			super.onCancelled();
+		}
+		
+	}
 	
 	class Odstevaj extends CountDownTimer
 	{
@@ -62,10 +89,7 @@ public class ThreeMusketeersActivity extends Activity {
 			globina=0;
 			ustavi = false;
 			viewcas.setText("0");
-			if(poteza== null)
-				imamZmagovalca();
 			board.setPolozaj(poteza.Poteza.getPolozaj());
-			imamZmagovalca();
 			board.NaVrstiJe();
 			KdoJeNaslednji();
 		}
@@ -77,7 +101,6 @@ public class ThreeMusketeersActivity extends Activity {
 		}
 		
 	}
-	
 	
 	private static ThreeMusketeersBoard board;
 	private static AlfaBeta alg = new AlfaBeta();
@@ -94,7 +117,9 @@ public class ThreeMusketeersActivity extends Activity {
 	private static PotezaClass poteza;
 	private static ThreeMusketeersActivity contex;
 	private static alfabetaTastk task;
+	private static mctsTastk task2;
 	private static boolean ustavi = false;
+	private static MCTS mcts = new MCTS();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,36 +155,9 @@ public class ThreeMusketeersActivity extends Activity {
 		view = (TextView) findViewById(R.id.TextView04);
 		viewcas = (TextView) findViewById(R.id.TextView01);
 
-	
-		
-		
-
-//        int[][] polje = {{2,1,0,1,1},{2,1,0,1,1},{1,2,1,2,1},{1,1,1,0,1},{1,2,1,0,1}};
-//        board.setPolozaj(polje);   
-//        
-//        TextView text = (TextView) findViewById(R.id.textView2);
-//        TextView text2 = (TextView) findViewById(R.id.textView3);
-//        String txt="";
-//        
-//        for(int[] x : board.getPolozaj())
-//        	txt += Arrays.toString(x) + "\n";
-//        
-//        text.setText(txt);
-//        text2.setText("");
-       
-		
-        
         board.setOnTouchListener(new View.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
-//				if(board.naVrsti)
-//				{
-//					vozlisce t = new vozlisce(board.getPolozaj(), !board.getNaVrst(), board.getMusketeerji());
-//					PotezaClass temp = alg.AlphaBeta(t, board.getNaVrst(), 5, -AlfaBeta.INF, AlfaBeta.INF);
-//					Log.i("TEST", temp.Poteza.getPolozaj().toString());
-//					board.setPolozaj(temp.Poteza.getPolozaj());
-//					board.NaVrstiJe();
-//				}
 				return false;
 			}
 		});
@@ -184,7 +182,6 @@ public class ThreeMusketeersActivity extends Activity {
     
 	public void vrniAlfaBeta()
 	{ 
-		
 		if(ustavi)
 		{
 			globina++;
@@ -194,13 +191,12 @@ public class ThreeMusketeersActivity extends Activity {
 			task = new alfabetaTastk();
 			task.execute(pol);
 		}
-		
-		
 	}
 	
     public static final void opravljenaPoteza()
     {
     	board.setIgralecJeNaVrsti(false);
+    	imamZmagovalca();
     	KdoJeNaslednji();
     
     }
@@ -224,12 +220,32 @@ public class ThreeMusketeersActivity extends Activity {
     	}
     	else if(in.compareToIgnoreCase("2") == 0) 
     	{
-    		//pripravleno za MCTS!!!!
-				board.setIgralecJeNaVrsti(true);
+    		if(board.getNaVrst()) {
+    			cas1.start();
+    		}
+    		else {
+    			cas2.start();
+    		}
+    		ustavi = true;
+    		zaustavi = false;
+    		contex.vrniMCTS();
     	}
     }
     
-    private static void KdoJeNaslednji()
+    private void vrniMCTS() {
+    	if(ustavi)
+		{
+			globina++;
+			Log.i("TEST", globina+"");
+			Integer[] pol = new Integer[1];
+			pol[0] = globina;
+			task2 = new mctsTastk();
+			task2.execute(pol);
+		}
+		
+	}
+
+	private static void KdoJeNaslednji()
     {
     	
     	if(trenutni == igralec1)
@@ -243,11 +259,10 @@ public class ThreeMusketeersActivity extends Activity {
     		view.setText(imeigralca1);
     	}
     	zacni(trenutni);
-    	imamZmagovalca();
     	
     }
     
-    private static void imamZmagovalca()
+    public static void imamZmagovalca()
     {
     	if(vozlisce.preveriZmago(board.getMusketeerji())==1)
     	{
@@ -262,33 +277,4 @@ public class ThreeMusketeersActivity extends Activity {
     		contex.finish();
     	}
     }
-    
-    private static boolean imaSosede(Point A)
-    {
-    	if(A.x+1 < board.polozaj.length)
-    	{
-    		if(board.polozaj[A.x+1][A.y]==1)
-    			return false;
-    	}
-    	if(A.x-1 > -1)
-    	{
-    		if(board.polozaj[A.x-1][A.y]==1)
-    			return false;
-    	}
-    	if(A.y+1 < board.polozaj.length)
-    	{
-    		if(board.polozaj[A.x][A.y+1]==1)
-    			return false;
-    	}
-    	if(A.y-1 > -1)
-    	{
-    		if(board.polozaj[A.x][A.y-1]==1)
-    			return false;
-    	}
-    	return true;
-    		
-    }
-    
-//    private static void
-    
 }

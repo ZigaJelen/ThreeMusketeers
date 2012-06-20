@@ -23,9 +23,7 @@ public class Menu extends Activity {
 		
 		TextView nasl = (TextView) findViewById(R.id.textView1);
 		nasl.setTypeface(font);
-		
-		but1 = (Button) findViewById(R.id.Button02);
-		but1.setTypeface(font);
+
 		but1 = (Button) findViewById(R.id.Button01);
 		but1.setTypeface(font);
 	}
@@ -43,5 +41,10 @@ public class Menu extends Activity {
 		
 	}
 	
-
+	public void navodila_OnClick(View sender)
+	{
+		Intent pojdi = new Intent(this, navodila.class);
+		startActivity(pojdi);
+	
+	}
 }

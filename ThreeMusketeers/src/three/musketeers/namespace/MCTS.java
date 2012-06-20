@@ -24,9 +24,7 @@ public class MCTS  {
 				vs.getPolozaj()[vs.getNasledniki().get(randomIndex).getX1()][vs.getNasledniki().get(randomIndex).getY1()] = 0;
 				vs.getPolozaj()[vs.getNasledniki().get(randomIndex).getX2()][vs.getNasledniki().get(randomIndex).getY2()] = 2;					
 			}
-			
 	}
-	
 	
 	public vozlisce Preveri(vozlisce st, int igralec)
 	{
@@ -111,17 +109,14 @@ public class MCTS  {
 		}		
 	}
 	
-	
-	
 	public vozlisce Simulacija(vozlisce st, int igralec)
 	{
 				Random generator = new Random();
-				
 				vozlisce tmp = null;
 				
 				if(igralec == 2)
 					{
-						tmp = this.Simuliraj(st/*.getNasledniki().get(randomIndex)*/, false); //simuliranje igre, vrne zadnje vozlišèe					
+						tmp = this.Simuliraj(st/*.getNasledniki().get(randomIndex)*/, true); //simuliranje igre, vrne zadnje vozlišèe					
 						if(tmp.preveriZmago(tmp.getMusketerji())==2)
 						{
 							nastaviOcenoOcetu(tmp, 1, 1);
@@ -135,7 +130,7 @@ public class MCTS  {
 					
 				else
 				{
-					 tmp = this.Simuliraj(st, true);				
+					 tmp = this.Simuliraj(st, false);				
 					 if(tmp.preveriZmago(tmp.getMusketerji())==1)
 					 {
 						 nastaviOcenoOcetu(tmp, 1, 1);
@@ -190,22 +185,4 @@ public class MCTS  {
 		}
 		nastaviOcenoOcetu(voz.getOce(), oc, ob);
 	}
-	
-	
-	
-	public void Simuliraj2(vozlisce voz,int igr)
-	{
-		SimulirajRandom(voz,igr);
-		if(voz.getNasledniki().size()==0)
-		{
-			return;
-		}
-		if(igr == 2)
-			Simuliraj2(new vozlisce(voz.getPolozaj(),false,voz.getMusketerji()),1);
-		else
-			Simuliraj2(new vozlisce(voz.getPolozaj(),true,voz.getMusketerji()),2);
-		
-	}
-
-		
-	}		
+}		

@@ -35,15 +35,6 @@
             android:textSize="25dp"
             android:textStyle="bold"
             android:onClick="igraj_OnClick" />
-
-        <Button
-            android:id="@+id/Button02"
-            android:layout_width="200dp"
-            android:layout_height="70dp"
-            android:background="@drawable/button"
-            android:text="@string/button2"
-            android:textSize="17dp" 
-            android:textStyle="bold" />
 
         <Button
             android:id="@+id/Button01"
@@ -51,8 +42,9 @@
             android:layout_height="70dp"
             android:background="@drawable/button"
             android:text="@string/button3"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            android:textSize="20dp"
+            android:textStyle="bold" 
+            android:onClick="navodila_OnClick"/>
 
     </LinearLayout>
 

@@ -90,65 +90,8 @@ public class Heuristic {
 		if(a>b)
 			return a-b;
 		return b-a;
-		
 	}
-	
-//	public int getValue()
-//	{
-//		int min = 0;
-//		int moznosti = 0;
-//		if(jePotMozna(musketer[0], musketer[1], true) && jePotMozna(musketer[0], musketer[2], true))
-//		{
-//			min=abs(musketer[0].x, musketer[1].x)+abs(musketer[0].x, musketer[2].x);
-//			moznosti++;
-//		}
-//		
-//		if(jePotMozna(musketer[1], musketer[0], true) && jePotMozna(musketer[1], musketer[2], true))
-//		{
-//			int tmp = abs(musketer[1].x, musketer[0].x)+abs(musketer[1].x, musketer[2].x);
-//			if(tmp < min)
-//				min=tmp;
-//			moznosti++;
-//		}
-//		
-//		if(jePotMozna(musketer[2], musketer[0], true) && jePotMozna(musketer[2], musketer[1], true))
-//		{
-//			int tmp = abs(musketer[2].x, musketer[0].x)+abs(musketer[2].x, musketer[1].x);
-//			if(tmp < min)
-//				min=tmp;
-//			moznosti++;
-//		}
-//		
-//		//za Y
-//		if(jePotMozna(musketer[2], musketer[0], false) && jePotMozna(musketer[2], musketer[1], false))
-//		{
-//			int tmp = abs(musketer[2].y, musketer[0].y)+abs(musketer[2].y, musketer[1].y);
-//			if(tmp < min)
-//				min=tmp;
-//			moznosti++;
-//		}
-//		
-//		if(jePotMozna(musketer[2], musketer[0], false) && jePotMozna(musketer[2], musketer[1], false))
-//		{
-//			int tmp = abs(musketer[2].y, musketer[0].y)+abs(musketer[2].y, musketer[1].y);
-//			if(tmp < min)
-//				min=tmp;
-//			moznosti++;
-//		}
-//		
-//		if(jePotMozna(musketer[2], musketer[0], false) && jePotMozna(musketer[2], musketer[1], false))
-//		{
-//			int tmp = abs(musketer[2].y, musketer[0].y)+abs(musketer[2].y, musketer[1].y);
-//			if(tmp < min)
-//				min=tmp;
-//			moznosti++;
-//		}
-//		
-//		Log.i("TEST", ""+(min+moznosti));
-//		return 0;
-//	}
 
-	
 	public int getValue(Point[] musk)
 	{
 		Point AB = new Point();
@@ -183,15 +126,12 @@ public class Heuristic {
 		st.add(AB.y+ CA.y);
 		st.add(AB.y+ BC.y);
 		st.add(BC.y+ CA.y);
-
-//		Log.i("TEST", st.toString());
 		
 		Integer tmp = st.get(0);
 		for(int x=1;x<st.size();x++)
 		{
 			tmp = Math.min(tmp, st.get(x));
 		}
-		
 		return tmp;
 	}
 	

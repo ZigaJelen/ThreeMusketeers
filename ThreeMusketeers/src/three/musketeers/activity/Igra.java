@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 public class Igra extends Activity {
 
+	public final static int CODE = 2253;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -57,8 +59,6 @@ public class Igra extends Activity {
 	
 	public void button_Click(View sender)
 	{
-		
-		
 		Button btn = (Button) sender;
 		int tmp = Integer.parseInt(btn.getText().toString());
 		tmp++;
@@ -103,8 +103,6 @@ public class Igra extends Activity {
 				ed.setText("Igrale 2");
 			}
 		}
-		
-		
 		btn.setBackgroundDrawable(zamenjavaSlikice(tmp));
 	}
 	
@@ -128,7 +126,6 @@ public class Igra extends Activity {
 		finish();
 	}
 
-	public final static int CODE = 2253;
 	public void start_OnClick(View sender)
 	{
 		Intent pojdi = new Intent(this, ThreeMusketeersActivity.class);
@@ -155,7 +152,7 @@ public class Igra extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
-		if(requestCode == CODE)
+		if(requestCode == CODE && resultCode >0 && resultCode<3)
 		{
 			Intent pojdi = new Intent(this, Konec.class);
 			
@@ -174,6 +171,4 @@ public class Igra extends Activity {
 		
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	
-	
 }

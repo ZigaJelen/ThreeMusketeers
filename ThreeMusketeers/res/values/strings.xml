@@ -5,7 +5,7 @@
     <string name="app_name">ThreeMusketeers</string>
     <string name="button1">IGRAJ</string>
     <string name="button2">NASTAVITVE</string>
-    <string name="button3">BLBLA</string>
+    <string name="button3">NAVODILA</string>
     <string name="nazaj">NAZAJ</string>
     <string name="pause">PAUSE</string>
     <string name="naslov">Three Musketeers game</string>
@@ -17,5 +17,14 @@
     
     <string name="navrsti">Na vrsti:</string>
     <string name="cas">Cas:</string>
+    
+    <string name="opis">Igro začne igralec Mušketirja. Pravila za premik so naslednja:
+- Igralec mušketirja lahko figurico pomika na ortogonalne sosede, če je sosed figurica nasprotnika. Ortogonalnost pomeni da lahko figurico premikamo gor, dol, levo ali desno, ne pa po diagonali.
+
+- Igralec nasprotnika lahko figurico premakne na ortogonalne sosede, če je sosed prazno polje.
+
+
+Igralec nasprotnika zmaga, če lahko prisili igralca mušketirja da ima vse figure v istem stolpcu ali v isti vrstici.
+Igralec mušketirja zmaga, če se na svoji potezi ne more premikati, na podlagi dejstva da ima za vse figurice ortogonalne sosede prazna polja in da niso figurice mušketirja v isti vrstici ali stolpcu.</string>
 
 </resources>

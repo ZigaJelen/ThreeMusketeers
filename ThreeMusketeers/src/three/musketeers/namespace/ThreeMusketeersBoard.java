@@ -34,8 +34,6 @@ public class ThreeMusketeersBoard extends View {
 	int velikost, XSelect, YSelect;
 	Boolean naVrsti; // true=musketeer
 	static Boolean igralecJeNaVrsti = false;
-//	TextView text2;
-//	TextView text3;
 	
 	private ArrayList<Point> musketeerji;
 	
@@ -56,16 +54,13 @@ public class ThreeMusketeersBoard extends View {
 					musketeerji.add(new Point(i, j));
 			}
 		}
+		ThreeMusketeersActivity.imamZmagovalca();
 		this.invalidate();
 	}
 
 	public ThreeMusketeersBoard(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
-//		text2 = (TextView)txt;
-//		text3 = (TextView)txt2;
 		musketeerji = new ArrayList<Point>();
-		//text3 = (TextView)findViewById(R.id.textView3);
 		XSelect=-1;
 		YSelect=-1;
 		naVrsti = true;
@@ -147,44 +142,6 @@ public class ThreeMusketeersBoard extends View {
 				}
 			
 				this.invalidate();
-				
-				//-----------------------------------------------------------
-				//				Nepomembno
-				//-----------------------------------------------------------
-//				String polje = "";
-//				String poteze = "";
-//				for(int[] x1 : polozaj)
-//				{
-//					polje += Arrays.toString(x1) + "\n";
-//				}
-//				
-//				
-//				
-//				if(!naVrsti) {
-//					
-//					polje +="\n" + "Cardinal";
-//					vozlisce t = new vozlisce(getPolozaj(),true, musketeerji);
-//					poteze = t.getMozne();
-//					text3.setText(poteze);
-//				}
-//				else {
-//					
-//					polje += "\n" + "The Musketeer";
-//					vozlisce t = new vozlisce(getPolozaj(),false, musketeerji);
-//					poteze = t.getMozne();
-//					text3.setText(poteze);
-//				}
-//				
-//				
-//				
-//				
-//				text2.setText(polje);
-				
-				
-				//-----------------------------------------------------------
-				//-----------------------------------------------------------
-				//-----------------------------------------------------------
-				
 		}
 		return super.onTouchEvent(event);
 	}
@@ -285,7 +242,4 @@ public class ThreeMusketeersBoard extends View {
 	public static void setIgralecJeNaVrsti(Boolean igralecJeNaVrsti) {
 		ThreeMusketeersBoard.igralecJeNaVrsti = igralecJeNaVrsti;
 	}
-
-
-
 }

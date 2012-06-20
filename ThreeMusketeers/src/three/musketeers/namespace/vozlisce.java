@@ -72,11 +72,9 @@ public class vozlisce{
 		{	
 			musketerji = new ArrayList<Point>();
 			nasledniki = new ArrayList<vozlisce>();
-			st_obiskov = 1;
+			st_obiskov = 0;
 			ocena = 0;
 			igralec = igr;
-			ocena = 0;
-			st_obiskov = 1;
 			X1 = x1;
 			Y1 = y1;
 			X2 = x2;
@@ -131,7 +129,9 @@ public class vozlisce{
 							{
 								if(polozaj_matrike[i+1][j]==0) //desno
 								{	 
-									nasledniki.add(new vozlisce(true,i,j,i+1,j, polozaj_matrike, musketerji));
+									vozlisce sin = new vozlisce(true,i,j,i+1,j, polozaj_matrike, musketerji);
+									sin.setOce(this);
+									nasledniki.add(sin);
 									st_potez++;
 								}
 							}
@@ -140,7 +140,9 @@ public class vozlisce{
 							{
 								if(polozaj_matrike[i-1][j]==0) //levo
 								{ 
-									nasledniki.add(new vozlisce(true,i,j,i-1,j, polozaj_matrike, musketerji));
+									vozlisce sin  =new vozlisce(true,i,j,i-1,j, polozaj_matrike, musketerji);
+									sin.setOce(this);
+									nasledniki.add(sin);
 									st_potez++;
 								}
 							}
@@ -149,7 +151,9 @@ public class vozlisce{
 							{
 								if(polozaj_matrike[i][j+1]==0) //gor
 								{	
-									nasledniki.add(new vozlisce(true,i,j,i,j+1, polozaj_matrike, musketerji));
+									vozlisce sin =new vozlisce(true,i,j,i,j+1, polozaj_matrike, musketerji);
+									sin.setOce(this);
+									nasledniki.add(sin);
 									st_potez++;
 								}
 							}						
@@ -158,7 +162,9 @@ public class vozlisce{
 							{
 								if(polozaj_matrike[i][j-1]==0) //dol
 								{	
-									nasledniki.add(new vozlisce(true,i,j,i,j-1, polozaj_matrike, musketerji));
+									vozlisce sin =new vozlisce(true,i,j,i,j-1, polozaj_matrike, musketerji);
+									sin.setOce(this);
+									nasledniki.add(sin);
 									st_potez++;
 								}
 							}
@@ -179,8 +185,10 @@ public class vozlisce{
 								{
 									if(polozaj_matrike[i+1][j]==1) //desno
 									{	 
-										nasledniki.add(new vozlisce(false,i,j,i+1,j, polozaj_matrike, musketerji));
-										st_potez++;
+										vozlisce sin =new vozlisce(false,i,j,i+1,j, polozaj_matrike, musketerji);
+										sin.setOce(this);
+										nasledniki.add(sin);
+										st_potez++;			
 									}
 								}
 							
@@ -188,8 +196,10 @@ public class vozlisce{
 								{
 									if(polozaj_matrike[i-1][j]==1) //levo
 									{ 
-										nasledniki.add(new vozlisce(false,i,j,i-1,j, polozaj_matrike, musketerji));
-										st_potez++;
+										vozlisce sin =new vozlisce(false,i,j,i-1,j, polozaj_matrike, musketerji);
+										sin.setOce(this);
+										nasledniki.add(sin);
+										st_potez++;		
 									}
 								}
 							
@@ -197,8 +207,10 @@ public class vozlisce{
 								{
 									if(polozaj_matrike[i][j+1]==1) //gor
 									{	
-										nasledniki.add(new vozlisce(false,i,j,i,j+1, polozaj_matrike, musketerji));
-										st_potez++;
+										vozlisce sin =new vozlisce(false,i,j,i,j+1, polozaj_matrike, musketerji);
+										sin.setOce(this);
+										nasledniki.add(sin);
+										st_potez++;		
 									}
 								}						
 							
@@ -206,8 +218,10 @@ public class vozlisce{
 								{
 									if(polozaj_matrike[i][j-1]==1) //dol
 									{	
-										nasledniki.add(new vozlisce(false,i,j,i,j-1, polozaj_matrike, musketerji));
-										st_potez++;
+										vozlisce sin =new vozlisce(false,i,j,i,j-1, polozaj_matrike, musketerji);
+										sin.setOce(this);
+										nasledniki.add(sin);
+										st_potez++;		
 									}
 								}
 							}

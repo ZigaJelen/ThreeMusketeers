@@ -33,6 +33,8 @@
         </activity>
         <activity android:name="three.musketeers.activity.Konec"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:screenOrientation="portrait"></activity>
+        <activity android:name="three.musketeers.activity.navodila"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
