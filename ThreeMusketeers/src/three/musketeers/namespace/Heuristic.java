@@ -184,7 +184,7 @@ public class Heuristic {
 		st.add(AB.y+ BC.y);
 		st.add(BC.y+ CA.y);
 
-		Log.i("TEST", st.toString());
+//		Log.i("TEST", st.toString());
 		
 		Integer tmp = st.get(0);
 		for(int x=1;x<st.size();x++)

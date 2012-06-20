@@ -10,7 +10,12 @@ public class AlfaBeta {
 	private final Heuristic h = new Heuristic();
 	public PotezaClass AlphaBeta(vozlisce P, boolean ig, int globina, int alpha, int beta) {
 		PotezaClass pot = new PotezaClass();
-
+		
+		if(ThreeMusketeersActivity.zaustavi)
+		{
+			return pot;
+		}
+		
 		if(P.getNasledniki().size() == 0 || globina == 0)
 		{
 			pot.Ocena = h.getValue(P.getMusketerji().toArray(new Point[P.getMusketerji().size()]));
@@ -46,6 +51,17 @@ public class AlfaBeta {
 		}
 		return pot;
 
+	}
+	
+	private void pauseCPU(int globina)
+	{
+		if(globina%2==0)
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 
 }

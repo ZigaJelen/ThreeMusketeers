@@ -12,7 +12,7 @@ import android.util.Log;
 // 1 1 1 1 1
 // 2 1 1 1 1
 public class vozlisce{
-	
+		private vozlisce oce;
 		private ArrayList<Point> musketerji;
 	
 		private ArrayList<vozlisce> nasledniki;
@@ -28,7 +28,21 @@ public class vozlisce{
 		private String pol;
 		private int[] mozne_poteze;// max število potez, ko izveš možne poteze, generiraš naslednike
 		
+		public static int preveriZmago(ArrayList<Point> musk)
+		{
+			if(musk.get(0).x == musk.get(1).x)
+				if(musk.get(1).x == musk.get(2).x)
+					return 1;
+			if(musk.get(0).y == musk.get(1).y)
+				if(musk.get(1).y == musk.get(2).y)
+					return 1;
+			return 2;
+		}
 		
+		public void setOcena(double x)
+		{
+			this.ocena = x;
+		}
 		public int[][] getPolozaj() {
 			return polozaj;
 		}
@@ -94,6 +108,7 @@ public class vozlisce{
 		
 		public vozlisce(int[][] polozaj_matrike, Boolean igr, ArrayList<Point> musk)
 		{
+			polozaj = polozaj_matrike;
 			musketerji = musk;
 			igralec = igr;
 			nasledniki = new ArrayList<vozlisce>();
@@ -101,6 +116,8 @@ public class vozlisce{
 			st_obiskov = 1;			
 			int st_potez = 0;
 			
+			if(preveriZmago(musk) == 1)
+				return;
 			
 			if(igr) //Stetje potez za belega, èe je igr 1
 			{
@@ -197,7 +214,11 @@ public class vozlisce{
 						}
 					}		
 			}
-			Log.i("TEST", musketerji.toString());
+//			Log.i("TEST", musketerji.toString());
+		}
+		
+		public void setSt_obiskov(double st_obiskov) {
+			this.st_obiskov = st_obiskov;
 		}
 		
 		public void dodajNaslednika(vozlisce voz)
@@ -221,13 +242,26 @@ public class vozlisce{
 			return izp;
 		}
 		
-		public double getOcena(){return this.getOcena(); }
-		public double getSt_obiskov(){return this.getSt_obiskov();}
 		public ArrayList<vozlisce> getNasledniki() {
 			return nasledniki;
 		}
 		public ArrayList<Point> getMusketerji() {
 			return musketerji;
+		}
+		public double getOcena() {
+			return this.ocena; 
+		}
+		public double getSt_obiskov() {
+			return st_obiskov;
+		}		
+		public void setNasledniki(ArrayList<vozlisce> nasledniki) {
+			this.nasledniki = nasledniki;
+		}
+		public vozlisce getOce() {
+			return oce;
+		}
+		public void setOce(vozlisce oce) {
+			this.oce = oce;
 		}
 	}
 

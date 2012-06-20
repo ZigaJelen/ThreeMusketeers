@@ -7,9 +7,15 @@
     <string name="button2">NASTAVITVE</string>
     <string name="button3">BLBLA</string>
     <string name="nazaj">NAZAJ</string>
+    <string name="pause">PAUSE</string>
     <string name="naslov">Three Musketeers game</string>
     
     <string name="musk">Musketeer player:</string>
     <string name="carl">Enemy player:</string>
+    
+    <string name="zmaga">Winner</string>
+    
+    <string name="navrsti">Na vrsti:</string>
+    <string name="cas">Cas:</string>
 
 </resources>

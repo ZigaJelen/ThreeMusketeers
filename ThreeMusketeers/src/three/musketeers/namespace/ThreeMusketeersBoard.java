@@ -3,8 +3,13 @@ package three.musketeers.namespace;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import three.musketeers.activity.Igra;
+
 import android.R.bool;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,7 +21,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.larvalabs.svgandroid.*;
@@ -26,8 +33,9 @@ public class ThreeMusketeersBoard extends View {
 	int[][] polozaj;
 	int velikost, XSelect, YSelect;
 	Boolean naVrsti; // true=musketeer
-	TextView text2;
-	TextView text3;
+	static Boolean igralecJeNaVrsti = false;
+//	TextView text2;
+//	TextView text3;
 	
 	private ArrayList<Point> musketeerji;
 	
@@ -51,11 +59,11 @@ public class ThreeMusketeersBoard extends View {
 		this.invalidate();
 	}
 
-	public ThreeMusketeersBoard(Context context, View txt, View txt2) {
+	public ThreeMusketeersBoard(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		text2 = (TextView)txt;
-		text3 = (TextView)txt2;
+//		text2 = (TextView)txt;
+//		text3 = (TextView)txt2;
 		musketeerji = new ArrayList<Point>();
 		//text3 = (TextView)findViewById(R.id.textView3);
 		XSelect=-1;
@@ -89,6 +97,9 @@ public class ThreeMusketeersBoard extends View {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// TODO Auto-generated method stub
+		if(!igralecJeNaVrsti)
+			return super.onTouchEvent(event);
+		
 		int x = (int)(event.getX()/velikost);
 		int y = (int)(event.getY()/velikost);
 		if(x<5&&y<5)
@@ -104,15 +115,18 @@ public class ThreeMusketeersBoard extends View {
 							polozaj[y][x]=1;
 							polozaj[YSelect][XSelect]=0;
 							NaVrstiJe();
+							ThreeMusketeersActivity.opravljenaPoteza();
 						}
 					}
 					if(polozaj[YSelect][XSelect]==2 && naVrsti == true)
 					{
 						if(polozaj[y][x]==1)
 						{
+							spremeniMussket(new Point(YSelect, XSelect),new Point(y, x));
 							polozaj[y][x]=2;
 							polozaj[YSelect][XSelect]=0;
 							NaVrstiJe();
+							ThreeMusketeersActivity.opravljenaPoteza();
 						}
 					}
 					XSelect = -1;
@@ -137,34 +151,34 @@ public class ThreeMusketeersBoard extends View {
 				//-----------------------------------------------------------
 				//				Nepomembno
 				//-----------------------------------------------------------
-				String polje = "";
-				String poteze = "";
-				for(int[] x1 : polozaj)
-				{
-					polje += Arrays.toString(x1) + "\n";
-				}
-				
-				
-				
-				if(!naVrsti) {
-					
-					polje +="\n" + "Cardinal";
-					vozlisce t = new vozlisce(getPolozaj(),true, musketeerji);
-					poteze = t.getMozne();
-					text3.setText(poteze);
-				}
-				else {
-					
-					polje += "\n" + "The Musketeer";
-					vozlisce t = new vozlisce(getPolozaj(),false, musketeerji);
-					poteze = t.getMozne();
-					text3.setText(poteze);
-				}
-				
-				
-				
-				
-				text2.setText(polje);
+//				String polje = "";
+//				String poteze = "";
+//				for(int[] x1 : polozaj)
+//				{
+//					polje += Arrays.toString(x1) + "\n";
+//				}
+//				
+//				
+//				
+//				if(!naVrsti) {
+//					
+//					polje +="\n" + "Cardinal";
+//					vozlisce t = new vozlisce(getPolozaj(),true, musketeerji);
+//					poteze = t.getMozne();
+//					text3.setText(poteze);
+//				}
+//				else {
+//					
+//					polje += "\n" + "The Musketeer";
+//					vozlisce t = new vozlisce(getPolozaj(),false, musketeerji);
+//					poteze = t.getMozne();
+//					text3.setText(poteze);
+//				}
+//				
+//				
+//				
+//				
+//				text2.setText(polje);
 				
 				
 				//-----------------------------------------------------------
@@ -173,6 +187,25 @@ public class ThreeMusketeersBoard extends View {
 				
 		}
 		return super.onTouchEvent(event);
+	}
+	
+	private void spremeniMussket(Point pred,Point el)
+	{
+		if(musketeerji.get(0).equals(pred))
+		{
+			musketeerji.get(0).x = el.x;
+			musketeerji.get(0).y = el.y;
+		}
+		if(musketeerji.get(1).equals(pred))
+		{
+			musketeerji.get(1).x = el.x;
+			musketeerji.get(1).y = el.y;
+		}
+		if(musketeerji.get(2).equals(pred))
+		{
+			musketeerji.get(2).x = el.x;
+			musketeerji.get(2).y = el.y;
+		}
 	}
 	
 	public void NaVrstiJe()
@@ -185,12 +218,13 @@ public class ThreeMusketeersBoard extends View {
 		}
 	}
 
+	private static boolean preveri = true;
+
 	@Override
 	protected void onDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
-		
 		super.onDraw(canvas);
-		canvas.drawColor(Color.BLUE);
+		canvas.drawColor(Color.WHITE);
 		Paint color = new Paint();
 		velikost = this.getWidth()/5;
 		System.out.println(this.getWidth());
@@ -210,12 +244,16 @@ public class ThreeMusketeersBoard extends View {
 					color.setARGB(255, 0, 0, 0);
 					
 					color.setARGB(255, 53, 94, 0);
-					canvas.drawRoundRect(new RectF((x-1)*velikost,(y-1)*velikost,x*velikost, y*velikost), 0, 0, color);
+//					canvas.drawRoundRect(new RectF((x-1)*velikost,(y-1)*velikost,x*velikost, y*velikost), 0, 0, color);
+					Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.kvad); 
+					canvas.drawBitmap(bmp,null, new RectF((x-1)*velikost,(y-1)*velikost,x*velikost, y*velikost), color);
 				}
 				else
 				{
 					color.setARGB(255, 255, 255, 153);
-					canvas.drawRoundRect(new RectF((x-1)*velikost,(y-1)*velikost,x*velikost, y*velikost), 0, 0, color);
+//					canvas.drawRoundRect(new RectF((x-1)*velikost,(y-1)*velikost,x*velikost, y*velikost), 0, 0, color);
+					Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.kvadp); 
+					canvas.drawBitmap(bmp,null, new RectF((x-1)*velikost,(y-1)*velikost,x*velikost, y*velikost), color);
 				}
 				k++;
 				//Izbrani kvadratek
@@ -234,14 +272,20 @@ public class ThreeMusketeersBoard extends View {
 						if(polozaj[y-1][x-1]==1)
 							figura = SVGParser.getSVGFromResource(getResources(), R.raw.crmen).getPicture();
 						if(polozaj[y-1][x-1]==2)
+						{
 							figura = SVGParser.getSVGFromResource(getResources(), R.raw.mus).getPicture();
+						}
 						canvas.drawPicture(figura, new RectF(8+(velikost*(x-1)), 15+(velikost*(y-1)), x*velikost-8, y*velikost-10));
 					}
 				}
 			}
 		}
 	}
-	
-	
+
+	public static void setIgralecJeNaVrsti(Boolean igralecJeNaVrsti) {
+		ThreeMusketeersBoard.igralecJeNaVrsti = igralecJeNaVrsti;
+	}
+
+
 
 }
