@@ -136,6 +136,7 @@ public class ThreeMusketeersActivity extends Activity {
 		 Typeface font2 = Typeface.createFromAsset(getAssets(), "font2.ttf"); 
 		nasl = (TextView) findViewById(R.id.TextView01);
 		nasl.setTypeface(font2);
+		nasl.setText("-");
 		nasl = (TextView) findViewById(R.id.TextView02);
 		nasl.setTypeface(font2);
 		nasl = (TextView) findViewById(R.id.TextView03);
@@ -151,6 +152,7 @@ public class ThreeMusketeersActivity extends Activity {
 		igralec1 = trenutni;
 		igralec2 = intent.getStringExtra("all");
 		imeigralca1 = intent.getStringExtra("imem");
+		nasl.setText(imeigralca1);
 		imeigralca2 = intent.getStringExtra("imee");
 		view = (TextView) findViewById(R.id.TextView04);
 		viewcas = (TextView) findViewById(R.id.TextView01);
