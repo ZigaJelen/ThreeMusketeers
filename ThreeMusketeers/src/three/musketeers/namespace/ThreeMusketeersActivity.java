@@ -31,7 +31,11 @@ public class ThreeMusketeersActivity extends Activity {
 		protected Void doInBackground(Integer... params) {
 			// TODO Auto-generated method stub
 			vozlisce t = new vozlisce(board.getPolozaj(), !board.getNaVrst(), board.getMusketeerji());
-			PotezaClass el = alg.AlphaBeta(t, board.getNaVrst(), params[0], -AlfaBeta.INF, AlfaBeta.INF);
+			PotezaClass el = new PotezaClass();
+			el.Poteza = t;
+			if(t.getNasledniki().size() != 0) {
+				el = alg.AlphaBeta(t, board.getNaVrst(), params[0], -AlfaBeta.INF, AlfaBeta.INF);
+			}
 			if(zaustavi != true)
 				poteza = el;
 			vrniAlfaBeta();
@@ -90,7 +94,6 @@ public class ThreeMusketeersActivity extends Activity {
 			ustavi = false;
 			viewcas.setText("0");
 			board.setPolozaj(poteza.Poteza.getPolozaj());
-			board.NaVrstiJe();
 			KdoJeNaslednji();
 		}
 
@@ -271,7 +274,7 @@ public class ThreeMusketeersActivity extends Activity {
     		contex.setResult(2);
     		contex.finish();
     	}
-    	vozlisce tmp = new vozlisce(board.getPolozaj(), board.getNaVrst(), board.getMusketeerji());
+    	vozlisce tmp = new vozlisce(board.getPolozaj(), !board.getNaVrst(), board.getMusketeerji());
     	if(tmp.getNasledniki().size() == 0)
     	{
 

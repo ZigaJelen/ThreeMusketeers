@@ -55,6 +55,7 @@ public class ThreeMusketeersBoard extends View {
 			}
 		}
 		ThreeMusketeersActivity.imamZmagovalca();
+		NaVrstiJe();
 		this.invalidate();
 	}
 
